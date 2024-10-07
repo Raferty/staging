@@ -1,0 +1,58 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  color: #111;
+  background-color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: Montserrat, sans-serif;
+}
+
+// stylelint-disable-next-line
+#__nuxt {
+  flex: 1;
+  height: inherit;
+}
+
+:root {
+  --layout-width: 100%;
+  --layout-padding: .75rem; // 12px
+
+  @media all and (min-width: 576px) {
+    //same as mobile
+  }
+
+  @media all and (min-width: 767px) {
+    //same as mobile
+    --layout-padding: 1rem; // 16px
+  }
+
+  @media all and (min-width: 767px) {
+    --layout-width: 56.25rem; // 900px
+    --layout-padding: 1rem; // 16px
+  }
+
+  @media all and (min-width: 1200px) {
+    --layout-width: 71rem; // 900px
+    --layout-padding: 1rem; // 16px
+  }
+
+  @media all and (min-width: 1400px) {
+    --layout-width: 81.438rem; // 900px
+    --layout-padding: 1rem; // 16px
+  }
+}
+
+.l-default {
+  margin: 0 auto;
+  max-width: var(--layout-width);
+  padding: 0 var(--layout-padding);
+  transition: all 0.4s ease;
+}
