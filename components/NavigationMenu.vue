@@ -1,12 +1,12 @@
 <template>
   <nav class="nav">
     <ul class="nav__list">
-      <li v-for="(route, index) in routes" class="nav__item">
+      <li v-for="item in routes" :key="item.name" class="nav__item">
         <NuxtLink
-          :to="route.link"
+          :to="item.link"
           class="nav__link"
-          :class="{ 'nav__link--active': route.link === route.path }"
-          >{{ route.name }}</NuxtLink
+          :class="{ 'nav__link--active': item.link === route.path }"
+          >{{ item.name }}</NuxtLink
         >
       </li>
     </ul>
@@ -15,8 +15,6 @@
 
 <script setup>
 const route = useRoute();
-
-console.log("path", route.path);
 
 const routes = ref([
   {

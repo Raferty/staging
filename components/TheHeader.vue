@@ -13,7 +13,6 @@
 <style lang="scss" scoped>
 .header {
   padding: 8px 0;
-
   margin-bottom: 32px;
 
   &__container {
