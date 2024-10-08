@@ -1,8 +1,5 @@
 <template>
-  <TheHeader />
-  <main class="l-default">
-    <slot />
-  </main>
+  <div></div>
 </template>
 
 <script setup></script>
