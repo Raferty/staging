@@ -1,97 +1,43 @@
 <template>
+  <section class="products-info">
+    <div class="products-info__sum">Сумма к оплате - $ {{ productsSum }}</div>
+  </section>
   <section class="products-list">
-    <div class="product-card">
-      <picture class="product-card__picture">
-        <img
-          src="/images/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_ 1.png"
-          alt=""
-        />
-      </picture>
-      <div class="product-card__info">
-        <div class="product-card__about">
-          <div class="product-card__name">
-            Fjallraven - Foldsack No. 1 Backpack
-          </div>
-          <div class="product-card__category">men's clothing</div>
-        </div>
-        <div class="product-card__digit">
-          <div class="product-card__price">$ 120</div>
-        </div>
-      </div>
-    </div>
-    <div class="product-card">
-      <picture class="product-card__picture">
-        <img
-          src="/images/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_ 1.png"
-          alt=""
-        />
-      </picture>
-      <div class="product-card__info">
-        <div class="product-card__about">
-          <div class="product-card__name">
-            Fjallraven - Foldsack No. 1 Backpack
-          </div>
-          <div class="product-card__category">men's clothing</div>
-        </div>
-        <div class="product-card__digit">
-          <div class="product-card__price">$ 120</div>
-        </div>
-      </div>
-    </div>
-    <div class="product-card">
-      <picture class="product-card__picture">
-        <img
-          src="/images/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_ 1.png"
-          alt=""
-        />
-      </picture>
-      <div class="product-card__info">
-        <div class="product-card__about">
-          <div class="product-card__name">
-            Fjallraven - Foldsack No. 1 Backpack
-          </div>
-          <div class="product-card__category">men's clothing</div>
-        </div>
-        <div class="product-card__digit">
-          <div class="product-card__price">$ 120</div>
-        </div>
-      </div>
+    <div class="products-list__item" v-for="product in ProductsData" :key="product.id">
+      <ProductCard  :title="product.title" :category="product.category" :price="product.price" :image="product.image" />
     </div>
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import { ProductsData } from '@/fakedata/products';
+
+const productsSum = computed(() => {
+  return ProductsData.map(i => i.price).reduce((a, b) => a + b, 0).toFixed(2);
+})
+</script>
 
 <style lang="scss" scoped>
 .products-list {
   display: flex;
+  flex-wrap: wrap;
   gap: 32px;
+
+
+  &__item {
+    flex: 1 1 auto;
+
+    @media all and (min-width: 1200px) {
+      flex: 1 1 calc(33.333% - 32px);
+    }
+
+  }
 }
 
-.product-card {
-  padding: 8px;
+.products-info {
   border-radius: 8px;
   border: 1px solid #111;
-
-  &__picture {
-    margin-bottom: 16px;
-  }
-
-  &__info {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &__name {
-    font-weight: 600;
-  }
-
-  &__category {
-    color: #757575;
-  }
-
-  &__price {
-    font-weight: 600;
-  }
+  margin-bottom: 32px;
+  padding: 16px;
 }
 </style>
