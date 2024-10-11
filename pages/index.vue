@@ -1,3 +1,7 @@
+<template>
+  index page
+</template>
+
 <script>
 import Header from '~/components/Header.vue'
 import ProductList from '~/components/ProductList.vue'
