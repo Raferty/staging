@@ -1,7 +1,9 @@
 <template>
-  <div>
-    articles
-  </div>
+  <TheHeader />
+  <BreadCrumbs />
+  <UiTitle tag="h1">Articles</UiTitle>
+  <ArticlesList />
+  <TheFooter />
 </template>
 
 <script setup>

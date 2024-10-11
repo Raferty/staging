@@ -16,6 +16,7 @@ body {
 }
 
 img {
+  display: block;
   max-width: 100%;
 }
 
@@ -26,12 +27,24 @@ ol {
   list-style: none;
 }
 
+figure {
+  padding: 0;
+  margin: 0;
+}
+
 picture {
   display: block;
 }
 
+h1,h2,h3,h4,h5,h6 {
+  padding: 0;
+  margin: 0;
+}
+
 // stylelint-disable-next-line
 #__nuxt {
+  display: flex;
+  flex-direction: column;
   flex: 1;
   height: inherit;
 }
