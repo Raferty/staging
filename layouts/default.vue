@@ -1,13 +1,10 @@
 <template>
+  <TheHeader />
   <main class="l-default">
     <slot />
   </main>
 </template>
 
-<script setup>
+<script setup></script>
 
-</script>
-
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

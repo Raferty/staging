@@ -14,4 +14,9 @@ export default defineNuxtConfig({
   },
 
   css: ["@/assets/styles/index.scss"],
+
+  components: {
+    global: true,
+    dirs: ["~/components/_icons", "~/components"],
+  },
 });
