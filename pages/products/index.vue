@@ -1,7 +1,6 @@
 <template>
-  <BreadCrumbs />
-  <UiTitle tag="h1">Articles</UiTitle>
-  <ArticlesList />
+  <UiTitle tag="h1">Products</UiTitle>
+  <ProductsList />
 </template>
 
 <script setup></script>

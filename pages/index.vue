@@ -1,8 +1,4 @@
-<template>
-  <TheHeader />
-  It's main page
-  <TheFooter />
-</template>
+<template>It's main page</template>
 
 <script setup></script>
 

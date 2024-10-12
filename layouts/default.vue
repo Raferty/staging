@@ -1,8 +1,11 @@
 <template>
   <TheHeader />
   <main class="main l-default">
-    <slot />
+    <suspense>
+      <slot />
+    </suspense>
   </main>
+  <TheFooter />
 </template>
 
 <script setup></script>
