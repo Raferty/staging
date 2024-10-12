@@ -1,24 +1,21 @@
 <template>
-  <header>
-    <Navigation />
-    <!-- хэдер -->
-    <h1>Articles</h1>
-  </header>
+  <div class="container header">
+      <HeaderLogo />
+      <Navigation />
+  </div>
 </template>
 
-<script>
-import Navigation from './Navigation.vue';
+<script setup></script>
 
-export default {
-  name: 'Header',
-  components: { Navigation }
-}
-</script>
+<style lang="scss">
+.header__nav-list-item {
+width: 1440px;
+height: 60px;
+padding: 0px 16px 0px 590px;
+gap: 0px;
+opacity: 0px;
 
-<style scoped>
-header {
-  background-color: #f0f0f0;
-  padding: 20px;
-  text-align: center;
 }
+ 
+
 </style>

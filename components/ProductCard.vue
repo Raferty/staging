@@ -1,0 +1,39 @@
+<template>
+    <div class="container">
+        <p class="products-directory">Main / Articles</p>
+        <h1 class="products-title">Articles</h1>
+    </div>
+  </template>
+
+<script setup>
+import { ProductsData } from '@/fakedata/products';
+
+console.log('ProductsData', ProductsData);
+
+// Вычисляемое свойство для отфильтрованного массива
+const filteredProductsData = computed(() => {
+  let result = [];
+
+  // код фильтрации массива
+
+  return result;
+});
+</script>
+
+<style lang="scss">
+  .container {
+      width: 1440px;
+      padding: 16px 16px;
+      margin: 0 auto;
+  }
+  .products-directory {
+      margin-bottom: 38px;
+  }
+  .products-title {
+      width: 225px;
+      height: 48px;
+      font-family: Montserrat;
+      font-size: 48px;
+      margin-left: 67px;
+  }
+</style>
