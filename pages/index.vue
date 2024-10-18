@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Header />
-    <Products />
+    <TheHeader />
+    <ProductsList />
   </div>
 </template>
 

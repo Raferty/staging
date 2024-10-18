@@ -1,37 +1,53 @@
 <template>
-    <nav class="header__nav">
-        <ul class="header__nav-list">
-            <li class="header__nav-list-item">
-                <a href="#" class="header-link">Main</a>
-            </li>
-            <li class="header__nav-list-item">
-                <a href="#" class="header-link">Products</a>
-            </li>
-            <li class="header__nav-list-item">
-                <a href="#" class="header-link">Articles</a>
+    <nav class="nav">
+        <ul class="nav__list">
+            <li v-for="item in routes" :key="item.name" class="nav__item">
+                <NuxtLink :to="item.link" class="nav__link" :class="{ 'nav__link--active' :item.link === route.path }">{{ item.name }}</NuxtLink>
             </li>
         </ul>
     </nav>
   </template>
   
-  <script setup></script>
+  <script setup>
+    const route = useRoute();
+
+    const routes = ref([
+        {
+            name: "Main",
+            link: "/",
+        },
+
+        {
+            name: "Products",
+            link: "/products",
+        },
+
+        {
+            name: "Articles",
+            link: "/articles",
+        },
+
+    ])
+</script>
   
   <style lang="scss">
-    .header__nav-list {
-        display: flex;
-        height: 60px;
-        list-style-type: none;
-        padding: 22px 16px;
-    }
-    .header__nav-list-item:not(:last-child){
-        margin-right: 12px;
-    }
-    .header-link {
-        text-decoration: none;
-        color: #111;
-        font-family: Montserrat;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 0.24px;
+    .nav {
+        &__list {
+            gap: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        &__link {
+            color: #111111; 
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.4s ease-in;
+
+            &:hover,
+            &--active {
+                color: #0941ac;
+            }
+        }
     }
 </style>
