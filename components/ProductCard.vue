@@ -36,19 +36,31 @@ const DollarToRuble = computed(() => {
 
 <style lang="scss" scoped>
 .product-card {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 8px;
   text-decoration: none;
   padding: 8px;
   border-radius: 8px;
   border: 1px solid #111;
 
   &__picture {
+    display: flex;
     align-content: center;
+    justify-content: center;
+
+    img {
+      object-fit: contain;
+    }
   }
 
   &__info {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
+    row-gap: 8px;
+    align-content: center;
     justify-content: flex-end;
   }
 
@@ -65,7 +77,9 @@ const DollarToRuble = computed(() => {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 120px;
+    flex-wrap: wrap;
+    row-gap: 8px;
+    align-content: center;
     margin-left: 16px;
   }
 
