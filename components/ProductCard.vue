@@ -1,9 +1,7 @@
 <template>
   <div class="product-card">
     <picture class="product-card__picture">
-      <img src="/public/image/51eg55uWmdL._AC_UX679_ 1.png" alt="красная футболка" />
-      <img src="/public/image/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_ 1.png" alt="белая футболка с черными руковаим">
-      <img src="/public/image/71YXzeOuslL._AC_UY879_ 1.png" alt="синяя водолазка">
+      <img :src="image" alt="синяя водолазка" />
     </picture>
     <div class="product-card__info">
       <div class="product-card__about">
@@ -12,7 +10,9 @@
       </div>
       <div class="product-card__digit">
         <div class="product-card__price">$ {{ price }}</div>
-        <div class="product-card__price product-card__price--ruble">₽ {{ DollarToRuble }}</div>
+        <div class="product-card__price product-card__price--ruble">
+          ₽ {{ DollarToRuble }}
+        </div>
       </div>
     </div>
   </div>
@@ -24,13 +24,13 @@ const props = defineProps({
   image: String,
   category: String,
   price: [String, Number],
-})
+});
 
 const DollarToRuble = computed(() => {
   const exchangeRate = 96.1079;
   const result = parseInt(props.price) * exchangeRate;
   return result.toFixed(2);
-})
+});
 </script>
 
 <style lang="scss" scoped>
@@ -68,8 +68,8 @@ const DollarToRuble = computed(() => {
     text-align: right;
     font-weight: 600;
 
-  &--ruble {
-    font-size: 10px;
+    &--ruble {
+      font-size: 10px;
     }
   }
 }
