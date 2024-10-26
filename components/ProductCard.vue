@@ -27,14 +27,22 @@ const props = defineProps ({
 
 <style lang="scss" scoped>
     .product-card {
-        max-width: 460px;
+        width: 460px;
+        height: 660px;
         padding: 8px;
         border-radius: 8px;
         border: 1px solid #111;
 
-        &__pictire {
+        &__picture {
             margin-bottom: 16px;
+            max-width: 100%;
+            height: auto;
+            
+            img {
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
+            }
         }
 
         &__info {

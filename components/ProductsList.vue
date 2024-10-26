@@ -2,14 +2,19 @@
     <section class="products-info">
     </section>
     <section class="products-list">
-        <div class="products-list__item" v-for="product in ProductsData" :key="product.id">
+        <div class="products-list__item" v-for="product in filteredProducts" :key="product.id">
             <ProductCard :title="product.title" :category="product.category" :price="product.price" :image="product.image" />
         </div>
     </section>
   </template>
   
   <script setup>
+    import { computed } from 'vue';
     import { ProductsData } from '@/fakedata/products';
+
+    const filteredProducts = computed(() => {
+        return ProductsData.filter(product => product.rating.rate >= 4);
+    });
 </script>
 
   <style lang="scss">
@@ -17,7 +22,8 @@
     .products-list {
         display: flex; 
         flex-wrap: wrap;
-        gap: 32px;
+        gap: 5px;
+
 
         &__item {
             flex: 1 1 auto;
