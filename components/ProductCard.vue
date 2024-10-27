@@ -9,9 +9,10 @@
         <div class="product-card__category">{{ category }}</div>
       </div>
       <div class="product-card__digit">
+        <div class="product-card__rate">Rate {{ rate }}</div>
         <div class="product-card__price">$ {{ price }}</div>
         <div class="product-card__price product-card__price--ruble">
-          ₽ {{ DollarToRuble }}
+          ₽ {{ useDollarToRouble(price) }}
         </div>
       </div>
     </div>
@@ -25,13 +26,9 @@ const props = defineProps({
   image: String,
   category: String,
   price: [String, Number],
+  rate: [String, Number],
 });
 
-const DollarToRuble = computed(() => {
-  const exchangeRate = 96.1079;
-  const result = parseInt(props.price) * exchangeRate;
-  return result.toFixed(2);
-});
 </script>
 
 <style lang="scss" scoped>
@@ -79,15 +76,20 @@ const DollarToRuble = computed(() => {
     justify-content: flex-end;
     flex-wrap: wrap;
     row-gap: 8px;
-    align-content: center;
+    width: 100%;
     margin-left: 16px;
   }
 
+  &__rate {
+    font-weight: 800;
+  }
+
   &__price {
-    text-align: right;
+    text-align: center;
     font-weight: 600;
 
     &--ruble {
+      text-align: center;
       font-size: 10px;
     }
   }
