@@ -1,5 +1,4 @@
 <template>
-  <UiTitle tag="h1">Products</UiTitle>
   <ProductsList />
 </template>
 

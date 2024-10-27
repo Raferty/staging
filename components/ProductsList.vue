@@ -1,6 +1,7 @@
 <template>
-  <div id="app">
-    <section class="products-info">
+  <ProductsFilter :products-list="productsList"/>
+  <div>
+    <!-- <section class="products-info">
       <div class="products-info_sort">
         <label for="select-list">Sort<br></label>
         <select id="select-list" @change="sort($event.target.value)">
@@ -11,7 +12,8 @@
         </select>
       </div>
       <div class="products-info__sum">Сумма к оплате - $ {{ productsSum }}</div>
-    </section>
+    </section> -->
+    <UiTitle tag="h1">Products</UiTitle>
     <section class="products-list">
       <div class="products-list__item" v-for="product in productsList" :key="product.id">
         <ProductCard :id="product.id" :title="product.title" :category="product.category" :price="product.price"
@@ -22,6 +24,7 @@
 </template>
 
 <script setup>
+
 const { data: ProductsData } = await useFetch(
   `https://fakestoreapi.com/products`
 );
