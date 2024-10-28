@@ -1,7 +1,7 @@
 <template>
-<h1 class="title" :class="[`title--${tag}`]">
+<component :is="tag" class="title" :class="[`title--${tag}`]">
   <slot />
-</h1>
+</component>
 </template>
 
 <script setup>
@@ -17,6 +17,16 @@ defineProps({
 
   &--h1 {
     font-size: 48px;
+  }
+
+  &--h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  &--h3 {
+    font-size: 24px;
+    margin-bottom: 16px;
   }
 }
 </style>
