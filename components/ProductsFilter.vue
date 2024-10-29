@@ -5,11 +5,11 @@
       <form action="" method="">
         <fieldset class="products-filter__categories">
           <legend>Categories</legend>
-          <label class="products-filter__category" v-for="category in set" :key="category">
-            <input type="checkbox" :value="category" />
+          <label class="products-filter__category" v-for="category in categories" :key="category">
+            <input type="checkbox" :value="category" v-model="checkedCategory" />
             <span>{{ category }}</span>
           </label>
-          <input type="button" value="Search">
+          <input @click="$emit('filter', checkedCategory)" type="button" value="Search">
         </fieldset>
       </form>
     </div>
@@ -17,11 +17,14 @@
 </template>
 
 <script setup>
+
 const props = defineProps({
   productsList: {
   }
 });
-const set = new Set(props.productsList.map((e) => e.category))
+const categories = await useProductsAPI("categories")
+
+const checkedCategory = ref([])
 
 </script>
 
@@ -43,11 +46,23 @@ const set = new Set(props.productsList.map((e) => e.category))
       float: right;
       max-width: 220px;
       height: 48px;
+      cursor: pointer;
       border-radius: 4px;
       background-color: #000000;
       font-weight: 600;
       font-size: 22px;
       color: #ffffff;
+
+      /* Наведение мыши */
+      &:hover {
+        background-color: #666;
+      }
+
+      /* Активное состояние */
+      &:active:not(:disabled){
+        background-color: #323232;
+        transition: background 0.2s ease;
+      }
 
     }
   }
@@ -58,12 +73,28 @@ const set = new Set(props.productsList.map((e) => e.category))
     user-select: none;
     position: relative;
 
+    /* Наведение мыши */
+    :hover {
+      color: #666;
+    }
+
     input[type=checkbox] {
       z-index: -1;
       opacity: 0;
       display: block;
       width: 0;
       height: 0;
+
+      /* Отмеченное состояние */
+      &:checked+span {
+        background: #0941AC;
+        color: #ffffff;
+      }
+
+      /* Активное состояние */
+      &:active:not(:disabled)+span {
+        background: #88caff;
+      }
     }
 
     span {
@@ -78,21 +109,6 @@ const set = new Set(props.productsList.map((e) => e.category))
       color: #0941AC;
     }
 
-    /* Отмеченное состояние */
-    input[type=checkbox]:checked+span {
-      background: #0941AC;
-      color: #ffffff;
-    }
-
-    /* Наведение мыши */
-    :hover {
-      color: #666;
-    }
-
-    /* Активное состояние */
-    input[type=checkbox]:active:not(:disabled)+span {
-      background: #88caff;
-    }
   }
 }
 </style>

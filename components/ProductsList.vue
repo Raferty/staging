@@ -1,10 +1,10 @@
 <template>
-  <ProductsFilter :products-list="productsList"/>
+  <ProductsFilter @filter="filteredList" :products-list="productsList" />
   <div>
-    <!-- <section class="products-info">
+    <section class="products-info">
       <div class="products-info_sort">
         <label for="select-list">Sort<br></label>
-        <select id="select-list" @change="sort($event.target.value)">
+        <select id="select-list" @change="sortedList($event.target.value)">
           <option value='default'>Default</option>
           <option value='abc'>By ABC</option>
           <option value='price'>By price</option>
@@ -12,7 +12,7 @@
         </select>
       </div>
       <div class="products-info__sum">Сумма к оплате - $ {{ productsSum }}</div>
-    </section> -->
+    </section>
     <UiTitle tag="h1">Products</UiTitle>
     <section class="products-list">
       <div class="products-list__item" v-for="product in productsList" :key="product.id">
@@ -25,28 +25,38 @@
 
 <script setup>
 
-const { data: ProductsData } = await useFetch(
-  `https://fakestoreapi.com/products`
-);
+const rawData = await useProductsAPI();
+let productsList = ref(rawData);
+let sortState;
 
-const productsSum = computed(() => {
-  return ProductsData.value
+const productsSum = shallowRef(computed(() => {
+  return productsList.value
     .map((i) => i.price)
     .reduce((a, b) => a + b, 0)
     .toFixed(2);
-});
-let sortParam;
-let productsList = shallowRef(ProductsData.value);
-function sort(value) {
-  sortParam = value;
-  productsList.value = SortedList()
-};
-function SortedList() {
+}));
+
+/**
+ * Обновляет список @see productsList для @see ProductCard компонента
+ *
+ * @param  {array[] | undefined} filters - массив с именами категорий.
+ */
+function filteredList(filters) {
+  productsList.value = rawData.filter((e) => { return (filters ?? []).includes(e.category) });
+  sortedList(sortState) // Как сохранить состояние сортировки без костылей?
+}
+
+
+function sortedList(sortParam) {
+  sortState = sortParam
   switch (sortParam) {
-    case 'abc': return ProductsData.value.sort(sortByABC);
-    case 'price': return ProductsData.value.sort(sortByPrice);
-    case 'rate': return ProductsData.value.sort(sortByRate);
-    default: return ProductsData.value.sort(sortById);
+    case 'abc': productsList.value.sort(sortByABC);
+      break
+    case 'price': productsList.value.sort(sortByPrice);
+      break
+    case 'rate': productsList.value.sort(sortByRate);
+      break
+    default: productsList.value.sort(sortById);
   }
 };
 let sortByABC = function (d1, d2) { return (d1.title.toLowerCase() > d2.title.toLowerCase()) ? 1 : -1; };
