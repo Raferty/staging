@@ -1,7 +1,11 @@
 <template>
-  <ProductsList />
+  <ProductsFilter v-model:why="productsFilteredList" :products-list="productsList" />
+  <ProductsList :products-filtered-list="productsFilteredList" />
 </template>
 
-<script setup></script>
-
+<script setup>
+const productsList = ref(await useProductsAPI());
+const productsFilteredList = ref()
+console.log("ProductsFilteredList", productsFilteredList)
+</script>
 <style lang="scss" scoped></style>
