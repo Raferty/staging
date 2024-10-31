@@ -2,7 +2,7 @@
   <section class="products-list">
     <div
       class="products-list__item"
-      v-for="product in ProductsData"
+      v-for="product in products"
       :key="product.id"
     >
       <ProductCard
@@ -17,9 +17,14 @@
 </template>
 
 <script setup>
-const { data: ProductsData } = await useFetch(
-  `https://fakestoreapi.com/products`
-);
+defineProps({
+  products: {
+    type: Array,
+    default: () => {
+      return [];
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>
