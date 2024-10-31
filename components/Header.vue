@@ -1,20 +1,19 @@
 <template>
-  <div class="container header">
+  <div class="container-header">
       <HeaderLogo />
-      <Navigation />
+  </div>
+
+  <div class="container-navigation">
+    <Navigation />
   </div>
 </template>
 
 <script setup></script>
 
 <style lang="scss">
-.header {
-  display: flex;
-  justify-content: space-between;
-  justify-items: baseline;
+.container-navigation {
+ display: flex;
+ justify-content: center;
+ margin-top: -20px;
 }
-
-
- 
-
 </style>

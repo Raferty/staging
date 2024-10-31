@@ -23,8 +23,6 @@ const { data: ProductsData } = await useFetch(
   `https://fakestoreapi.com/products`
 );
 
-console.log("ProductsData", ProductsData);
-
 const productsSum = computed(() => {
   return ProductsData.value
     .map((i) => i.price)

@@ -1,7 +1,7 @@
 <template>
   <div class="product-card">
     <picture class="product-card__picture">
-      <img :src="image" alt="синяя водолазка" />
+      <img :src="image" alt="продукты" />
     </picture>
     <div class="product-card__info">
       <div class="product-card__about">
