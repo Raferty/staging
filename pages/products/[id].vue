@@ -1,13 +1,17 @@
-<template>Странца продукта</template>
+<template>Странца продукта
+<ProductCard 
+:id="product.id" 
+:title="product.title" 
+:category="product.category" 
+:price="product.price"
+:image="product.image"/>
+</template>
 
-<script setup>
-const route = useRoute();
-
-console.log("Текущий ID продукта", route.params.id);
-
-// Эндпоинт базы данных https://fakestoreapi.com/products/1
-// Сделать запрос к базе данных с помощью https://nuxt.com/docs/getting-started/data-fetching
-// Вывести карточку продукта в шаблон с помощью компонента ProductCard
+<script setup> //Почему не выводится информация о ProductCard?
+const route_params = useRoute();
+const productID = route_params.params.id;
+console.log("Текущий ID продукта", productID);
+const {data : product} = await useFetch('https://fakestoreapi.com/products/${productID}');
 </script>
 
 <style lang="scss" scoped></style>
