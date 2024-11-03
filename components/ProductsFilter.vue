@@ -12,14 +12,14 @@
           <input type="checkbox" :value="category" v-model="checkedSet" />
           <span>{{ category }}</span>
         </label>
-        <input type="button" @click="setCategory(checkedSet)" value="Submit" />
         <UiTitle tag="h2">Price</UiTitle>
         <label for="min">
-          <input id="min" type="number" v-model="minPrice" />
+          <input id="min" type="number" v-model="min" />
         </label>
         <label for="max">
-          <input id="max" type="number" v-model="maxPrice" />
+          <input id="max" type="number" v-model="max" />
         </label>
+        <input type="button" @click="$emit('submitCategory', checkedSet)" value="Submit" />
       </fieldset>
     </div>
   </section>
@@ -27,118 +27,47 @@
     <div class="products-info_sort">
       <UiTitle tag="h2">Sort</UiTitle>
       <label>
-        <select v-model="sortParam" @change="getSorted(sortParam)">
-          <option v-for="option in options" :value="option.value">
+        <select v-model="sortParam" @change="$emit('changeSort',sortParam)">
+          <option v-for="option in sortOptions" :value="option.value">
             {{ option.text }}
           </option>
         </select>
       </label>
     </div>
-    <span class="products-info__sum">Сумма к оплате - $ {{ productsSum }}</span>
   </section>
 </template>
 
 <script setup>
+const emit = defineEmits(['submitCategory', 'changeSort'])
+
 const props = defineProps({
   productsList: {},
 });
-const why = defineModel("why");
+const filter = defineModel("filter");
+
 const categories = await useProductsAPI("categories");
-
-const checkedCategory = ref(categories);
 const checkedSet = ref([]);
-function setCategory(params) {
-  console.log("Param", params);
-  checkedCategory.value = params;
-  getProductsByFilter();
-}
-
-const minPrice = ref(Math.min(...props.productsList.map((e) => e.price)));
-const maxPrice = ref(Math.max(...props.productsList.map((e) => e.price)));
-
+const min = ref(Math.min(...props.productsList.map((e) => e.price)));
+const max = ref(Math.max(...props.productsList.map((e) => e.price)));
 const sortParam = ref("");
-const options = ref([
+const sortOptions = ref([
   { text: "Default", value: "" },
   { text: "By asc", value: "asc" },
   { text: "By price", value: "price" },
   { text: "By rate", value: "rate" },
 ]);
 
-function getProductsByFilter() {
-  // Фильтруем товары
-  let state = props.productsList;
-  console.log(
-    "checkedCategory\n ",
-    checkedCategory.value,
-    "minPrice",
-    minPrice
-  );
-  let filtered = ref();
-  filtered = state
-    // По категории
-    .filter((product) => {
-      return (checkedCategory.value ?? []).includes(product.category);
-    })
-
-    // По брендам
-    // .filter(product => {
-    //   return selectBrand == 0 || product.brand == selectBrand;
-    // })
-
-    // По ценам
-    .filter((product) => {
-      return product.price >= minPrice.value && product.price <= maxPrice.value;
-    });
-
-  // По полю поиска
-  // .filter(product => {
-  //   return inputSearch == '' || product.title.toLowerCase().indexOf(inputSearch.toLowerCase()) !== -1;
-  // });
-  console.log("filtered ==>>>", filtered);
-  why.value = filtered;
-  sortParam.value = "";
+filter.value = {
+  checkedCategory: ref(categories),
+  price: {
+    minPrice: ref(min),
+    maxPrice: ref(max),
+  },
+  sortBy: ref(sortParam)
 }
 
-function getSorted(param) {
-  console.log("Get sort!!!");
-  switch (param) {
-    case "asc":
-      why.value.sort(sortByABC);
-      break;
-    case "price":
-      why.value.sort(sortByPrice);
-      break;
-    case "rate":
-      why.value.sort(sortByRate);
-      break;
-    default:
-      why.value.sort(sortById);
-  }
-}
-let sortByABC = function (d1, d2) {
-  return d1.title.toLowerCase() > d2.title.toLowerCase() ? 1 : -1;
-};
-let sortByPrice = function (d1, d2) {
-  return d1.price > d2.price ? 1 : -1;
-};
-let sortByRate = function (d1, d2) {
-  return d1.rating.rate > d2.rating.rate ? 1 : -1;
-};
-let sortById = function (d1, d2) {
-  return d1.id > d2.id ? 1 : -1;
-};
 
-getProductsByFilter();
 
-const productsSum = shallowRef(
-  computed(() => {
-    console.log("filtered ???", why);
-    return why.value
-      .map((i) => i.price)
-      .reduce((a, b) => a + b, 0)
-      .toFixed(2);
-  })
-);
 </script>
 
 <style lang="scss" scoped>
