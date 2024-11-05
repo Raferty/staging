@@ -1,11 +1,21 @@
 <template>
   <div>
     <UiTitle tag="h1">Products</UiTitle>
-    <span class="products-info__sum">Сумма к оплате - $ {{ productsSum }}</span>
+    <span class="products-info__sum">Сумма - $ {{ productsSum }}</span>
     <section class="products-list">
-      <div class="products-list__item" v-for="product in productsFilteredList" :key="product.id">
-        <ProductCard :id="product.id" :title="product.title" :category="product.category" :price="product.price"
-          :image="product.image" :rate="product.rating.rate" />
+      <div
+        class="products-list__item"
+        v-for="product in productsFilteredList"
+        :key="product.id"
+      >
+        <ProductCard
+          :id="product.id"
+          :title="product.title"
+          :category="product.category"
+          :price="product.price"
+          :image="product.image"
+          :rate="product.rating.rate"
+        />
       </div>
     </section>
   </div>
@@ -13,19 +23,19 @@
 
 <script setup>
 const props = defineProps({
-  productsFilteredList: {
-  }
+  productsFilteredList: {},
 });
 
-const productsSum = ref();
-productsSum.value = props.productsFilteredList
-  .map((i) => i.price)
-  .reduce((a, b) => a + b, 0)
-  .toFixed(2);
+const productsSum = computed(() => {
+  console.log("props.productsFilteredList", props.productsFilteredList)
+  return props.productsFilteredList
+    .map((i) => i.price)
+    .reduce((a, b) => a + b, 0)
+    .toFixed(2);
+});
 </script>
 
 <style lang="scss" scoped>
-
 span {
   display: inline-block;
   cursor: pointer;
@@ -50,5 +60,4 @@ span {
     }
   }
 }
-
 </style>

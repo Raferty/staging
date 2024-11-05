@@ -1,63 +1,68 @@
 <template>
-  <ProductsFilter v-model:filter="productsFilter"
-  :products-list="productsList"
-  @submit-category="setCategory"
-  @change-sort="getSorted"/>
+  <ProductsFilter
+    v-model:filter="productsFilter"
+    :categories="categories"
+    :products-filter="productsFilter"
+  />
   <ProductsList :products-filtered-list="productsFilteredList" />
 </template>
 
 <script setup>
 const productsList = await useProductsAPI();
 const categories = await useProductsAPI("categories");
-const productsFilter = ref()
-const productsFilteredList = ref(productsList)
+const productsFilter = reactive({
+  checkedCategory: categories,
+  price: {
+    minPrice: Math.min(...productsList.map((e) => e.price)),
+    maxPrice: Math.max(...productsList.map((e) => e.price)),
+  },
+  sortBy: "",
+});
 
-function setCategory(params) {
-  productsFilter.value.checkedCategory = params[0]? params : categories;
-  getFilteredValue();
-}
-
-function getFilteredValue (){
+const productsFilteredList = computed(() => {
+    switch (productsFilter.sortBy) {
+    case "asc":
+      productsList.sort((d1, d2) => {
+        return d1.title.toLowerCase() > d2.title.toLowerCase() ? 1 : -1;
+      });
+      break;
+    case "price":
+      productsList.sort((d1, d2) => {
+        return d1.price > d2.price ? 1 : -1;
+      });
+      break;
+    case "rate":
+      productsList.sort((d1, d2) => {
+        return d1.rating.rate > d2.rating.rate ? 1 : -1;
+      });
+      break;
+    default:
+      productsList.sort((d1, d2) => {
+        return d1.id > d2.id ? 1 : -1;
+      });
+  }
   // Фильтруем товары
-  let value = productsList
+  return productsList
     // По категории
     .filter((product) => {
-      console.log("Ok?");
-      return (productsFilter.value.checkedCategory ?? []).includes(product.category);
+      console.log("Ok?", productsFilter);
+      return (productsFilter.checkedCategory ?? []).includes(
+        product.category
+      );
     })
     // По ценам
     .filter((product) => {
-      return product.price >= productsFilter.value.price.minPrice
-      && product.price <= (productsFilter.value.price.maxPrice? productsFilter.value.price.maxPrice : Math.max(...productsList.map((e) => e.price)));
-  });
-  productsFilteredList.value = value;
-  productsFilter.value.sortBy = "";
-}
+      return (
+        product.price >= productsFilter.price.minPrice &&
+        product.price <=
+          (productsFilter.price.maxPrice
+            ? productsFilter.price.maxPrice
+            : Math.max(...productsList.map((e) => e.price)))
+      );
+    });
+})
 
 
-function getSorted(param) {
-  switch (param) {
-    case "asc":
-      productsFilteredList.value.sort((d1, d2) => {
-  return d1.title.toLowerCase() > d2.title.toLowerCase() ? 1 : -1;
-});
-      break;
-    case "price":
-      productsFilteredList.value.sort((d1, d2) => {
-  return d1.price > d2.price ? 1 : -1;
-});
-      break;
-    case "rate":
-      productsFilteredList.value.sort((d1, d2) => {
-  return d1.rating.rate > d2.rating.rate ? 1 : -1;
-});
-      break;
-    default:
-      productsFilteredList.value.sort((d1, d2) => {
-  return d1.id > d2.id ? 1 : -1;
-});
-  }
-}
 
 </script>
 <style lang="scss" scoped></style>

@@ -9,17 +9,28 @@
           v-for="category in categories"
           :key="category"
         >
-          <input type="checkbox" :value="category" v-model="checkedSet" />
+          <input
+            type="checkbox"
+            :value="category"
+            v-model="productsFilter.checkedCategory"
+          />
           <span>{{ category }}</span>
         </label>
         <UiTitle tag="h2">Price</UiTitle>
         <label for="min">
-          <input id="min" type="number" v-model="min" />
+          <input
+            id="min"
+            type="number"
+            v-model="productsFilter.price.minPrice"
+          />
         </label>
         <label for="max">
-          <input id="max" type="number" v-model="max" />
+          <input
+            id="max"
+            type="number"
+            v-model="productsFilter.price.maxPrice"
+          />
         </label>
-        <input type="button" @click="$emit('submitCategory', checkedSet)" value="Submit" />
       </fieldset>
     </div>
   </section>
@@ -27,7 +38,7 @@
     <div class="products-info_sort">
       <UiTitle tag="h2">Sort</UiTitle>
       <label>
-        <select v-model="sortParam" @change="$emit('changeSort',sortParam)">
+        <select v-model="productsFilter.sortBy">
           <option v-for="option in sortOptions" :value="option.value">
             {{ option.text }}
           </option>
@@ -38,18 +49,12 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['submitCategory', 'changeSort'])
-
-const props = defineProps({
-  productsList: {},
-});
 const filter = defineModel("filter");
+const props = defineProps({
+  categories: {},
+  productsFilter: {},
+});
 
-const categories = await useProductsAPI("categories");
-const checkedSet = ref([]);
-const min = ref(Math.min(...props.productsList.map((e) => e.price)));
-const max = ref(Math.max(...props.productsList.map((e) => e.price)));
-const sortParam = ref("");
 const sortOptions = ref([
   { text: "Default", value: "" },
   { text: "By asc", value: "asc" },
@@ -57,17 +62,7 @@ const sortOptions = ref([
   { text: "By rate", value: "rate" },
 ]);
 
-filter.value = {
-  checkedCategory: ref(categories),
-  price: {
-    minPrice: ref(min),
-    maxPrice: ref(max),
-  },
-  sortBy: ref(sortParam)
-}
-
-
-
+filter.value = props.productsFilter;
 </script>
 
 <style lang="scss" scoped>
