@@ -1,4 +1,4 @@
-<template>It's main page</template>
+<template><ModalForm/></template>
 
 <script setup></script>
 
