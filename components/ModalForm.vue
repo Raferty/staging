@@ -1,6 +1,7 @@
 <template>
   <button @click="open = true">
-          <UiTitle tag="h2">Add User</UiTitle></button>
+    <UiTitle tag="h2">{{ form.title }}</UiTitle>
+  </button>
 
   <Teleport to="body">
     <div v-if="open" class="add-user">
@@ -13,29 +14,24 @@
           <img src="public/close 1.svg" alt="" srcset="" />
         </button>
         <div class="add-user__form__title">
-          <UiTitle tag="h2">Add User</UiTitle>
+          <UiTitle tag="h2">{{ form.title }}</UiTitle>
         </div>
-        <div class="add-user__form__fields">
+        <div class="add-user__form__fields" v-for="field in form.fields">
           <div>
-            <label for="username"><UiLabel tag="h6">username</UiLabel></label>
-            <input type="text" name="username" id="username" />
+            <label :for="field.id"
+              ><UiLabel tag="h6">{{ field.name }}</UiLabel></label
+            >
+            <input
+              :type="field.type"
+              :name="field.name"
+              :id="field.id"
+              :placeholder="field.placeholder"
+              :required="field.required"
+            />
           </div>
-          <div>
-            <label for="Email"><UiLabel tag="h6">Email</UiLabel></label>
-            <input type="text" name="Email" id="Email" />
-          </div>
-          <div>
-            <label for="Password"><UiLabel tag="h6">Password</UiLabel></label>
-            <input type="text" name="Password" id="Password" />
-          </div>
-          <div>
-            <label for="RepeatPassword"></label>
-            <UiLabel tag="h6">RepeatPassword</UiLabel>
-            <input type="text" name="RepeatPassword" id="RepeatPassword" />
-          </div>
-          <div>
-            <button type="submit"><UiTitle tag="h3">Add</UiTitle></button>
-          </div>
+        </div>
+        <div>
+          <button type="submit"><UiTitle tag="h3">{{ form.button }}</UiTitle></button>
         </div>
       </form>
     </div>
@@ -43,6 +39,11 @@
 </template>
 
 <script setup>
+const props = defineProps({form: {
+  title: String,
+  button: String,
+  fields: {},
+}});
 const open = ref(false);
 </script>
 
@@ -96,9 +97,10 @@ button {
         border-radius: 4px;
         height: 48px;
       }
-      button {
-        margin-bottom: 5rem;
-      }
+    }
+    button[type="submit"] {
+      width: 100%;
+      margin-bottom: 5rem;
     }
   }
 }
