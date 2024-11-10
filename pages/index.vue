@@ -1,6 +1,4 @@
-<template>
-  <AdminAddUser />
-</template>
+<template>it's mane page</template>
 
 <script setup></script>
 

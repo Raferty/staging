@@ -29,6 +29,10 @@ const routes = ref([
     name: "Articles",
     link: "/articles",
   },
+  {
+    name: "Admin",
+    link: "/admin",
+  },
 ]);
 </script>
 

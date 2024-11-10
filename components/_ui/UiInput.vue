@@ -1,7 +1,12 @@
 <template>
   <div class="ui-input">
     <label for="proce_from" class="ui-input__label">{{ label }}</label>
-    <input v-model="localValue" type="text" class="ui-input__input" />
+    <input
+      v-model="localValue"
+      type="text"
+      class="ui-input__input"
+      :class="classes"
+    />
   </div>
 </template>
 
@@ -19,7 +24,7 @@ const props = defineProps({
   size: {
     type: String,
     validator(value) {
-      return ["large", "medium"].indexOf(value) !== -1;
+      return ["medium", "large"].indexOf(value) !== -1;
     },
     default: "medium",
   },
@@ -35,6 +40,11 @@ const localValue = computed({
     emit("update:modelValue", newValue);
   },
 });
+
+const classes = computed(() => ({
+  [`block`]: props.block,
+  [`s-${props.size}`]: true,
+}));
 </script>
 
 <style lang="scss" scoped>
@@ -47,10 +57,23 @@ const localValue = computed({
   }
 
   &__input {
-    height: 36px;
     border-radius: 4px;
     border: 1px solid #000;
     padding: 0 12px;
+
+    &.s-medium {
+      font-size: 18px;
+      height: 38px;
+    }
+
+    &.s-large {
+      font-size: 22px;
+      height: 48px;
+    }
+
+    &.block {
+      width: 100%;
+    }
   }
 }
 </style>

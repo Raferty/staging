@@ -1,7 +1,7 @@
 <template>
   <nuxt-link :to="`/products/${id}`" class="product-card">
     <picture class="product-card__picture">
-      <img :src="image" alt="" />
+      <img :src="image" alt="" class="product-card__image" />
     </picture>
     <div class="product-card__info">
       <div class="product-card__about">
@@ -15,10 +15,15 @@
         </div>
       </div>
     </div>
+    <button v-if="authStore.isAuth">add product</button>
   </nuxt-link>
 </template>
 
 <script setup>
+import { useAuthStore } from "./store/auth";
+
+const authStore = useAuthStore();
+
 const props = defineProps({
   id: [String, Number],
   title: String,
@@ -44,6 +49,11 @@ const DollarToRuble = computed(() => {
 
   &__picture {
     margin-bottom: 16px;
+    height: 430px;
+  }
+
+  &__image {
+    max-height: 100%;
   }
 
   &__info {
@@ -54,6 +64,8 @@ const DollarToRuble = computed(() => {
   &__name {
     color: #1c1c1c;
     font-weight: 600;
+    min-height: 56px;
+    margin-bottom: 16px;
   }
 
   &__category {
