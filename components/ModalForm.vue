@@ -4,19 +4,19 @@
   </button>
 
   <Teleport to="body">
-    <div v-if="open" class="add-user">
-      <form class="add-user__form" action="">
+    <div v-if="open" class="modal">
+      <form class="modal__form" action="">
         <button
-          class="add-user__form__close"
+          class="modal__form__close"
           type="button"
           @click="open = false"
         >
           <img src="public/close 1.svg" alt="" srcset="" />
         </button>
-        <div class="add-user__form__title">
+        <div class="modal__form__title">
           <UiTitle tag="h2">{{ form.title }}</UiTitle>
         </div>
-        <div class="add-user__form__fields" v-for="field in form.fields">
+        <div class="modal__form__fields" v-for="field in form.fields">
           <div>
             <label :for="field.id"
               ><UiLabel tag="h6">{{ field.name }}</UiLabel></label
@@ -55,7 +55,7 @@ button {
   color: white;
   background-color: black;
 }
-.add-user {
+.modal {
   position: fixed;
   top: 20%;
   left: 50%;
