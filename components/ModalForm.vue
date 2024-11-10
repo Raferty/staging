@@ -5,12 +5,8 @@
 
   <Teleport to="body">
     <div v-if="open" class="modal">
-      <form class="modal__form" action="">
-        <button
-          class="modal__form__close"
-          type="button"
-          @click="open = false"
-        >
+      <form class="modal__form" @submit="handleForm">
+        <button class="modal__form__close" type="button" @click="open = false">
           <img src="public/close 1.svg" alt="" srcset="" />
         </button>
         <div class="modal__form__title">
@@ -22,16 +18,20 @@
               ><UiLabel tag="h6">{{ field.name }}</UiLabel></label
             >
             <input
+              v-model="formData[field.name]"
               :type="field.type"
               :name="field.name"
               :id="field.id"
               :placeholder="field.placeholder"
               :required="field.required"
             />
+            {{ formData[field.name] }}
           </div>
         </div>
         <div>
-          <button type="submit"><UiTitle tag="h3">{{ form.button }}</UiTitle></button>
+          <button type="submit">
+            <UiTitle tag="h3">{{ form.button }}</UiTitle>
+          </button>
         </div>
       </form>
     </div>
@@ -39,12 +39,40 @@
 </template>
 
 <script setup>
-const props = defineProps({form: {
-  title: String,
-  button: String,
-  fields: {},
-}});
 const open = ref(false);
+const props = defineProps({
+  form: {
+    title: String,
+    button: String,
+    fields: {},
+  },
+});
+const auth = defineModel("auth");
+auth.value = false;
+const isValid = ref(false);
+const formData = ref({});
+
+const handleForm = async (e) => {
+  e.preventDefault();
+  isValid.value = useValidationForm(formData.value);
+
+  if (!isValid.value) return;
+  const { data, status, error, refresh, clear } = await useFetch(
+    `https://fakestoreapi.com/auth/login`,
+    {
+      method: "POST",
+      body: JSON.stringify(formData.value),
+    }
+  );
+  if (status.value === "success") {
+    alert("You are in protected  area!!!")
+    auth.value = true;
+  }
+};
+
+// watch(() => formData.password, (newValue, oldValue) => {
+//   isValid.value = formData.password === newValue;
+// });
 </script>
 
 <style lang="scss">
