@@ -27,7 +27,6 @@ const props = defineProps({
 });
 
 const productsSum = computed(() => {
-  console.log("props.productsFilteredList", props.productsFilteredList)
   return props.productsFilteredList
     .map((i) => i.price)
     .reduce((a, b) => a + b, 0)

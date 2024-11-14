@@ -5,7 +5,7 @@
 
   <Teleport to="body">
     <div v-if="open" class="modal">
-      <form class="modal__form" @submit="handleForm">
+      <form class="modal__form" @submit.prevent="$emit('sendForm', formData)">
         <button class="modal__form__close" type="button" @click="open = false">
           <img src="public/close 1.svg" alt="" srcset="" />
         </button>
@@ -18,14 +18,14 @@
               ><UiLabel tag="h6">{{ field.name }}</UiLabel></label
             >
             <input
-              v-model="formData[field.name]"
+              v-model="formData[field.id]"
               :type="field.type"
               :name="field.name"
               :id="field.id"
               :placeholder="field.placeholder"
               :required="field.required"
             />
-            {{ formData[field.name] }}
+            {{ formData[field.id] }}
           </div>
         </div>
         <div>
@@ -39,40 +39,22 @@
 </template>
 
 <script setup>
+const emits = defineEmits(["sendForm",])
 const open = ref(false);
 const props = defineProps({
   form: {
     title: String,
     button: String,
-    fields: {},
+    fields: {
+      "type": String,
+      "name": String,
+      "id": String,
+      "placeholder": String,
+      "required": Boolean,
+    },
   },
 });
-const auth = defineModel("auth");
-auth.value = false;
-const isValid = ref(false);
 const formData = ref({});
-
-const handleForm = async (e) => {
-  e.preventDefault();
-  isValid.value = useValidationForm(formData.value);
-
-  if (!isValid.value) return;
-  const { data, status, error, refresh, clear } = await useFetch(
-    `https://fakestoreapi.com/auth/login`,
-    {
-      method: "POST",
-      body: JSON.stringify(formData.value),
-    }
-  );
-  if (status.value === "success") {
-    alert("You are in protected  area!!!")
-    auth.value = true;
-  }
-};
-
-// watch(() => formData.password, (newValue, oldValue) => {
-//   isValid.value = formData.password === newValue;
-// });
 </script>
 
 <style lang="scss">
@@ -85,9 +67,10 @@ button {
 }
 .modal {
   position: fixed;
-  top: 20%;
+  background-color: white;
+  top: 50%;
   left: 50%;
-  margin-left: -220px;
+  transform: translate(-50%, -50%);
   &__form {
     display: flex;
     flex-direction: column;
@@ -95,7 +78,6 @@ button {
     justify-content: center;
     align-content: center;
     width: 440px;
-    height: 528px;
     box-sizing: border-box;
     box-shadow: 0 0 2px 2px rgba(0, 0, 255, 0.2);
     border-radius: 8px;

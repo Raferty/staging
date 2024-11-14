@@ -45,7 +45,6 @@ const productsFilteredList = computed(() => {
   return productsList
     // По категории
     .filter((product) => {
-      console.log("Ok?", productsFilter);
       return (productsFilter.checkedCategory ?? []).includes(
         product.category
       );

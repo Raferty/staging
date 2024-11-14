@@ -3,12 +3,17 @@
     <div class="header__container l-default">
       <Logo />
       <NavigationMenu />
+      <LoginUser v-if="!authStore.isAuth"/>
       <div>Block for future search field</div>
     </div>
   </header>
 </template>
 
-<script setup></script>
+<script setup>
+import { useAuthStore } from "./store/auth";
+
+const authStore = useAuthStore();
+</script>
 
 <style lang="scss" scoped>
 .header {

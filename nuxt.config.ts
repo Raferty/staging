@@ -19,4 +19,6 @@ export default defineNuxtConfig({
     global: true,
     dirs: ["~/components/_icons", "~/components/_ui", "~/components"],
   },
+
+  modules: ["@pinia/nuxt"],
 });

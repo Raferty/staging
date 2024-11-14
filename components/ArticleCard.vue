@@ -71,9 +71,6 @@ const props = defineProps({
     font-size: 12px;
   }
 
-  &__info {
-  }
-
   &__name {
     font-weight: 600;
     min-height: 60px;

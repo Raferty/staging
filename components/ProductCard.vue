@@ -1,8 +1,10 @@
 <template>
-  <nuxt-link :to="`/products/${id}`" class="product-card">
+  <div class="product-card">
+  <nuxt-link :to="`/products/${id}`">
     <picture class="product-card__picture">
       <img :src="image" alt="" />
     </picture>
+  </nuxt-link>
     <div class="product-card__info">
       <div class="product-card__about">
         <div class="product-card__name">{{ title }}</div>
@@ -11,15 +13,24 @@
       <div class="product-card__digit">
         <div class="product-card__rate">Rate {{ rate }}</div>
         <div class="product-card__price">$ {{ price }}</div>
-        <div class="product-card__price product-card__price--ruble">
+        <div class="product-card__price product-card__price__ruble">
           ₽ {{ useDollarToRouble(price) }}
         </div>
       </div>
+      <button v-if="authStore.isAuth" @click="orderStore.addProduct(id)">
+        <UiLabel tag="h3">Add product</UiLabel>
+      </button>
     </div>
-  </nuxt-link>
+  </div>
 </template>
 
 <script setup>
+import { useAuthStore } from "./store/auth";
+import { useOrderStore } from "./store/order";
+
+const authStore = useAuthStore();
+const orderStore = useOrderStore();
+const emits = defineEmits(["addProduct"]);
 const props = defineProps({
   id: [String, Number],
   title: String,
@@ -28,7 +39,6 @@ const props = defineProps({
   price: [String, Number],
   rate: [String, Number],
 });
-
 </script>
 
 <style lang="scss" scoped>
@@ -59,6 +69,11 @@ const props = defineProps({
     row-gap: 8px;
     align-content: center;
     justify-content: flex-end;
+
+    button {
+      width: 50%;
+      margin: auto;
+    }
   }
 
   &__name {
@@ -88,7 +103,7 @@ const props = defineProps({
     text-align: center;
     font-weight: 600;
 
-    &--ruble {
+    &__ruble {
       text-align: center;
       font-size: 10px;
     }
