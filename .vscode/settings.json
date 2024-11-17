@@ -1,0 +1,16 @@
+{
+    "workbench.activityBar.location": "default",
+    "workbench.view.alwaysShowHeaderActions": true,
+    "workbench.editor.alwaysShowEditorActions": false,
+    "workbench.settings.openDefaultSettings": false,
+    "zenMode.centerLayout": true,
+    "zenMode.fullScreen": true,
+    "zenMode.hideActivityBar": true,
+    "zenMode.hideLineNumbers": true,
+    "zenMode.hideStatusBar": true,
+    "zenMode.restore": true,
+    "zenMode.silentNotifications": true,
+    "window.density.editorTabHeight": "default",
+    "accessibility.hideAccessibleView": false,
+    "explorer.fileNesting.enabled": false
+}

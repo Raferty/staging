@@ -3,8 +3,8 @@
     <div class="header__container l-default">
       <Logo />
       <NavigationMenu />
-      <LoginUser v-if="!authStore.isAuth"/>
-      <div>Block for future search field</div>
+      <LoginUser v-if="!authStore.isAuth" />
+      <OrderCard />
     </div>
   </header>
 </template>

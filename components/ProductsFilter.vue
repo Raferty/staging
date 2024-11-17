@@ -114,7 +114,7 @@ filter.value = props.productsFilter;
     display: inline-block;
     margin: 0 5px 0 0;
     user-select: none;
-    position: relative;
+    // position: relative;
 
     /* Наведение мыши */
     :hover {

@@ -1,7 +1,6 @@
 <template>
   <div>
     <UiTitle tag="h1">Products</UiTitle>
-    <span class="products-info__sum">Сумма - $ {{ productsSum }}</span>
     <section class="products-list">
       <div
         class="products-list__item"
@@ -24,13 +23,6 @@
 <script setup>
 const props = defineProps({
   productsFilteredList: {},
-});
-
-const productsSum = computed(() => {
-  return props.productsFilteredList
-    .map((i) => i.price)
-    .reduce((a, b) => a + b, 0)
-    .toFixed(2);
 });
 </script>
 

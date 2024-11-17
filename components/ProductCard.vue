@@ -17,7 +17,7 @@
           ₽ {{ useDollarToRouble(price) }}
         </div>
       </div>
-      <button v-if="authStore.isAuth" @click="orderStore.addProduct(id)">
+      <button v-if="authStore.isAuth" @click="orderStore.addProduct(props)">
         <UiLabel tag="h3">Add product</UiLabel>
       </button>
     </div>

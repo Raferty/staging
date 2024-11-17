@@ -1,13 +1,16 @@
 <template>
-  <button @click="open = true">
+  <button class="modal__open" @click="open = true">
     <UiTitle tag="h2">{{ form.title }}</UiTitle>
   </button>
 
   <Teleport to="body">
     <div v-if="open" class="modal">
+      <div class="modal__shadow" @mousedown="open = false"></div>
       <form class="modal__form" @submit.prevent="$emit('sendForm', formData)">
         <button class="modal__form__close" type="button" @click="open = false">
-          <img src="public/close 1.svg" alt="" srcset="" />
+          <svg viewBox="0 0 24 24" width="24" height="24" class="icon">
+            <use href="public\icons.svg#close"></use>
+          </svg>
         </button>
         <div class="modal__form__title">
           <UiTitle tag="h2">{{ form.title }}</UiTitle>
@@ -29,7 +32,7 @@
           </div>
         </div>
         <div>
-          <button type="submit">
+          <button class="modal__form__submit" type="submit">
             <UiTitle tag="h3">{{ form.button }}</UiTitle>
           </button>
         </div>
@@ -39,18 +42,18 @@
 </template>
 
 <script setup>
-const emits = defineEmits(["sendForm",])
+const emits = defineEmits(["sendForm"]);
 const open = ref(false);
 const props = defineProps({
   form: {
     title: String,
     button: String,
     fields: {
-      "type": String,
-      "name": String,
-      "id": String,
-      "placeholder": String,
-      "required": Boolean,
+      type: String,
+      name: String,
+      id: String,
+      placeholder: String,
+      required: Boolean,
     },
   },
 });
@@ -60,31 +63,37 @@ const formData = ref({});
 <style lang="scss">
 button {
   border-radius: 4px;
-  margin-top: 1rem;
   height: 48px;
+  cursor: pointer;
   color: white;
   background-color: black;
 }
 .modal {
   position: fixed;
-  background-color: white;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  &__shadow {
+    background-color: rgba(#000000, 0.5);
+    position: absolute;
+    inset: 0;
+  }
   &__form {
+    position: relative;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
     width: 440px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
     box-sizing: border-box;
     box-shadow: 0 0 2px 2px rgba(0, 0, 255, 0.2);
     border-radius: 8px;
     &__close {
       position: absolute;
       height: 24px;
-      width: 24px;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -108,8 +117,9 @@ button {
         height: 48px;
       }
     }
-    button[type="submit"] {
+    &__submit {
       width: 100%;
+      margin-top: 1rem;
       margin-bottom: 5rem;
     }
   }
