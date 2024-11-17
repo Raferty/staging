@@ -15,14 +15,27 @@
         </div>
       </div>
     </div>
-    <button v-if="authStore.isAuth">add product</button>
+    <UiButton
+      v-if="authStore.isAuth"
+      @click.prevent="cartStore.addProduct(localData)"
+    >
+      add product
+    </UiButton>
+    <UiButton
+      v-if="authStore.isAuth && cartStore.isProductExist(localData.productId)"
+      @click.prevent="cartStore.deleteProductById(localData.productId)"
+    >
+      delete product
+    </UiButton>
   </nuxt-link>
 </template>
 
 <script setup>
 import { useAuthStore } from "./store/auth";
+import { useCartStore } from "./store/cart";
 
 const authStore = useAuthStore();
+const cartStore = useCartStore();
 
 const props = defineProps({
   id: [String, Number],
@@ -31,6 +44,12 @@ const props = defineProps({
   category: String,
   price: [String, Number],
 });
+
+const localData = {
+  productId: props.id,
+  title: props.title,
+  quantity: 1,
+};
 
 const DollarToRuble = computed(() => {
   const exchangeRate = 96.1079;
