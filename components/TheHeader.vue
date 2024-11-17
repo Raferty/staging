@@ -3,7 +3,7 @@
     <div class="header__container l-default">
       <Logo />
       <NavigationMenu />
-      <div>Block for future search field</div>
+      <CartMenu />
     </div>
   </header>
 </template>
