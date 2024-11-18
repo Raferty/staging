@@ -1,4 +1,6 @@
-<template>it's mane page</template>
+<template>
+  <NuxtLayout> it's mane page </NuxtLayout>
+</template>
 
 <script setup></script>
 

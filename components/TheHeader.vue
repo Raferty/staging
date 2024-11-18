@@ -10,14 +10,8 @@
         >
         <UiButton @click="open = !open">Login</UiButton>
       </div>
-
-      <div>
-        <UiButton @click="showCart = !showCart">Cart</UiButton>
-      </div>
     </div>
   </header>
-
-  <OrdersList v-if="showCart" />
   <ModalForm v-if="open" @close="open = false" @submit="handleForm" />
 </template>
 
@@ -27,7 +21,6 @@ import { useAuthStore } from "./store/auth";
 const authStore = useAuthStore();
 
 const open = ref(false);
-const showCart = ref(false);
 
 const handleForm = (event) => {
   $fetch(`https://fakestoreapi.com/auth/login`, {
@@ -43,6 +36,7 @@ const handleForm = (event) => {
 
 <style lang="scss" scoped>
 .header {
+  height: 46px;
   padding: 8px 0;
   margin-bottom: 32px;
 
