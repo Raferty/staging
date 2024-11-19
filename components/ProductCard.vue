@@ -1,10 +1,10 @@
 <template>
   <div class="product-card">
-  <nuxt-link :to="`/products/${id}`">
-    <picture class="product-card__picture">
-      <img :src="image" alt="" />
-    </picture>
-  </nuxt-link>
+    <nuxt-link :to="`/products/${id}`">
+      <picture class="product-card__picture">
+        <img :src="image" alt="" />
+      </picture>
+    </nuxt-link>
     <div class="product-card__info">
       <div class="product-card__about">
         <div class="product-card__name">{{ title }}</div>
@@ -17,7 +17,16 @@
           ₽ {{ useDollarToRouble(price) }}
         </div>
       </div>
-      <button v-if="authStore.isAuth" @click="orderStore.addProduct(props)">
+      <CounterCartButton
+        v-if="orderStore.isProductExist(id)"
+        @counter="changer"
+        :quantity="qty(id)"
+        >{{ qty(id) }}</CounterCartButton
+      >
+      <button
+        v-if="authStore.isAuth && !orderStore.isProductExist(id)"
+        @click="orderStore.addProduct(localData)"
+      >
         <UiLabel tag="h3">Add product</UiLabel>
       </button>
     </div>
@@ -26,10 +35,10 @@
 
 <script setup>
 import { useAuthStore } from "./store/auth";
-import { useOrderStore } from "./store/order";
+import { useOrderStore } from "./store/card";
 
 const authStore = useAuthStore();
-const orderStore = useOrderStore();
+const orderStore = reactive(useOrderStore());
 const emits = defineEmits(["addProduct"]);
 const props = defineProps({
   id: [String, Number],
@@ -39,6 +48,18 @@ const props = defineProps({
   price: [String, Number],
   rate: [String, Number],
 });
+const changer = (e) => orderStore.changeQuantity(props.id, e);
+const qty = orderStore.getQuantityById;
+
+const localData = {
+  productId: props.id,
+  image: props.image,
+  title: props.title,
+  category: props.category,
+  rate: props.rate,
+  price: props.price,
+  quantity: 1,
+};
 </script>
 
 <style lang="scss" scoped>
@@ -65,10 +86,7 @@ const props = defineProps({
   &__info {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     row-gap: 8px;
-    align-content: center;
-    justify-content: flex-end;
 
     button {
       width: 50%;
@@ -88,11 +106,8 @@ const props = defineProps({
   &__digit {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    flex-wrap: wrap;
     row-gap: 8px;
-    width: 100%;
-    margin-left: 16px;
+    padding: 0 16px;
   }
 
   &__rate {

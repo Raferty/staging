@@ -1,5 +1,5 @@
 <template>
-  <div class="card" @mouseleave="hidden = true">
+  <div id="cart" class="card" @mouseleave="hidden = true">
     <button class="card__button" @mouseenter="hidden = false">
       <div class="card__button__container">
         <svg viewBox="0 0 48 48" width="48" height="48" class="icon">
@@ -34,14 +34,13 @@
 <script setup>
 const hidden = ref("");
 import { useAuthStore } from "./store/auth";
-import { useOrderStore } from "./store/order";
+import { useOrderStore } from "./store/card";
 
 const authStore = useAuthStore();
 const orderStore = useOrderStore();
-const order = orderStore.getOrder;
+const order = orderStore.getOrders;
 
 const productsSum = computed(() => {
-  console.log("order :>> ", order);
   if (!!order)
     return order
       .map((e) => e.price * e.quantity)

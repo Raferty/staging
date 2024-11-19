@@ -4,7 +4,7 @@
       <Logo />
       <NavigationMenu />
       <LoginUser v-if="!authStore.isAuth" />
-      <OrderCard />
+      <OrderCart v-if="authStore.isAuth" />
     </div>
   </header>
 </template>
