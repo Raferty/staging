@@ -18,10 +18,11 @@
         </div>
       </div>
       <CounterCartButton
-        v-if="orderStore.isProductExist(id)"
-        @counter="changer"
-        :quantity="qty(id)"
-        >{{ qty(id) }}</CounterCartButton
+        class="product-card__counter"
+        v-if="authStore.isAuth && orderStore.isProductExist(id)"
+        @counter="(e) => orderStore.changeQuantity(id, e)"
+        :quantity="qty"
+        >{{ qty }}</CounterCartButton
       >
       <button
         v-if="authStore.isAuth && !orderStore.isProductExist(id)"
@@ -35,11 +36,10 @@
 
 <script setup>
 import { useAuthStore } from "./store/auth";
-import { useOrderStore } from "./store/card";
+import { useOrderStore } from "./store/cart";
 
 const authStore = useAuthStore();
 const orderStore = reactive(useOrderStore());
-const emits = defineEmits(["addProduct"]);
 const props = defineProps({
   id: [String, Number],
   title: String,
@@ -48,9 +48,8 @@ const props = defineProps({
   price: [String, Number],
   rate: [String, Number],
 });
-const changer = (e) => orderStore.changeQuantity(props.id, e);
-const qty = orderStore.getQuantityById;
 
+const qty = computed(() => orderStore.getQuantityById(props.id))
 const localData = {
   productId: props.id,
   image: props.image,
@@ -58,7 +57,7 @@ const localData = {
   category: props.category,
   rate: props.rate,
   price: props.price,
-  quantity: 1,
+  // quantity: 1,  Сохраняет предыдущее состояние!!!
 };
 </script>
 
@@ -122,6 +121,9 @@ const localData = {
       text-align: center;
       font-size: 10px;
     }
+  }
+  &__counter {
+    height: 48px;
   }
 }
 </style>

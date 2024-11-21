@@ -8,7 +8,6 @@ import { useAuthStore } from "./store/auth";
 const authStore = useAuthStore();
 const isValid = ref(false)
 const submitForm = async (formData) => {
-  console.log('formData :>> ', formData);
   isValid.value = useValidationForm(formData);
 
   if (isValid.value !== true) return alert(isValid.value);

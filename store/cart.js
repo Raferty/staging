@@ -19,15 +19,15 @@ export const useOrderStore = defineStore({
         (order) => order.productId === payload.productId
       );
 
-      if (curentIndex === -1) {
-        this.orders.push(payload);
-      } else {
-        this.orders[curentIndex].quantity++;
-      }
+      if (curentIndex === -1)
+        this.orders.push({...payload, quantity: 1});
+      // } else {
+      //   this.orders[curentIndex].quantity++;
+      // }
     },
 
     deleteAllProducts() {
-      this.orders = [];
+      while (this.orders.length > 0) this.orders.splice(0, 1);
     },
 
     isProductExist(id) {

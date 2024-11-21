@@ -22,19 +22,20 @@
 
 <script setup>
 const props = defineProps({
-  quantity: Number,
+  quantity: 0,
 });
 </script>
 
 <style lang="scss">
 .counter {
   width: 100%;
+    height: 100%;
   &__cart {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 56px !important;
+    height: 100%;
     box-sizing: border-box;
     margin: 0;
     padding: 0;

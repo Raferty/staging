@@ -1,31 +1,61 @@
 <template>
-  <div id="cart" class="card" @mouseleave="hidden = true">
-    <button class="card__button" @mouseenter="hidden = false">
-      <div class="card__button__container">
+  <div id="cart" class="cart" @mouseleave="hidden = true">
+    <button class="cart__button" @mouseenter="hidden = false">
+      <div class="cart__button__icon-container">
         <svg viewBox="0 0 48 48" width="48" height="48" class="icon">
-          <use
-            href="public\icons.svg#orders"
-          ></use>
+          <use href="public\icons.svg#orders"></use>
         </svg>
       </div>
     </button>
-    <div class="card__order">
-      <div class="card__order__container" :hidden>
-        <div class="card__order__items" >
-          <div class="card__order__item" v-for="card in order">
-            <picture class="card__order__picture">
-              <img :src="card.image" alt="" />
+    <div class="cart__order">
+      <div class="cart__order__container" :hidden>
+        <div class="cart__order__item-container">
+          <div class="cart__order__item" v-for="order in cart">
+            <picture class="cart__order__picture">
+              <img :src="order.image" alt="" />
             </picture>
-            <div class="card__order__about">
-              <div class="card__order__name">{{ card.title }}</div>
-              <div class="card__order__category">{{ card.category }}</div>
-              <div class="card__order__price">$ {{ card.price }}</div>
+            <div class="cart__order__about">
+              <div class="cart__order__about__title">{{ order.title }}</div>
+              <div class="cart__order__about__category">
+                {{ order.category }}
+              </div>
+              <div class="cart__order__about__price">$ {{ order.price }}</div>
+            </div>
+            <div class="cart__order__item__counter-container">
+              <CounterCartButton
+                class="cart__order__item__counter"
+                v-if="orderStore.isProductExist(order.productId)"
+                @counter="(e) => orderStore.changeQuantity(order.productId, e)"
+                :quantity="order.quantity"
+                >{{ order.quantity }}</CounterCartButton
+              >
+              <button
+                class="cart__button bin"
+                @click="() => orderStore.changeQuantity(order.productId, 0)"
+              >
+                <div class="cart__button__icon-container">
+                  <svg viewBox="0 0 24 24" width="24" height="24" class="icon">
+                    <use href="public\icons.svg#bin"></use>
+                  </svg>
+                </div>
+              </button>
             </div>
           </div>
         </div>
-        <button class="card__order__item button">
-          <span class="products-info__sum">Buy $ {{ productsSum }}</span>
-        </button>
+        <div class="cart__order__button-container" v-if="cart.length > 0">
+          <button class="cart__order__button">
+            <span>Buy $ {{ productsSum }}</span>
+          </button>
+          <button
+            class="cart__order__button"
+            @click="orderStore.deleteAllProducts()"
+          >
+            <span>Clear All</span>
+          </button>
+        </div>
+        <UiLabel tag="h3" v-else="!cart.length > 0"
+          >There's nothing here yet</UiLabel
+        >
       </div>
     </div>
   </div>
@@ -33,16 +63,14 @@
 
 <script setup>
 const hidden = ref("");
-import { useAuthStore } from "./store/auth";
-import { useOrderStore } from "./store/card";
+import { useOrderStore } from "./store/cart";
 
-const authStore = useAuthStore();
 const orderStore = useOrderStore();
-const order = orderStore.getOrders;
+const cart = orderStore.getOrders;
 
 const productsSum = computed(() => {
-  if (!!order)
-    return order
+  if (!!cart)
+    return cart
       .map((e) => e.price * e.quantity)
       .reduce((a, b) => a + b, 0)
       .toFixed(2);
@@ -50,21 +78,23 @@ const productsSum = computed(() => {
 </script>
 
 <style lang="scss">
-.card {
+$button-height: 48px;
+$item-height: 96px;
+$container-width: 460px;
+.cart {
   position: relative;
   &__button {
     display: flex;
     cursor: pointer;
     align-items: center;
-    padding: 0 12px;
-    height: 48px;
-    border: 0;
+    height: $button-height;
+    border: none;
     padding: 0;
     background-color: transparent;
-    background-image: none;
-    color: #213547;
-    transition: color 0.5s;
-    &__container {
+    &.bin {
+    height: calc($button-height/2);
+    }
+    &__icon-container {
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -80,37 +110,81 @@ const productsSum = computed(() => {
     max-height: calc(100vh - 48px);
     &__container {
       border-radius: 8px;
-      padding: 12px 0;
-      min-width: 192px;
+      padding: 12px 14px;
+      width: $container-width;
       border: 1px solid transparent;
       background: white;
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08);
       transition: background-color 0.5s;
       overflow: auto;
     }
-    &__items {
+    &__button-container {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+    }
+    &__item-container {
       display: flex;
       flex-direction: column;
-      padding: 0 14px;
       transition: border-color 0.5s;
     }
     &__item {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding-bottom: 6px;
-      position: relative;
+      height: $item-height;
+      border-bottom: solid 1px #213547;
+      &__counter-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 100%;
+        width: 50%;
+      }
+      &__counter {
+        height: calc($button-height/2);
+        box-sizing: border-box;
+      }
     }
+
     &__picture {
-      width: 72px;
-      height: 92px;
+      height: $item-height;
+      width: $item-height;
+      display: flex;
+      align-content: center;
+      justify-content: center;
+
+      img {
+        object-fit: contain;
+      }
     }
-    &__about{
+    &__about {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+      font-size: 16px;
+      line-height: 120%;
+      &__title {
+        height: 50%;
+        overflow: hidden;
+        font-weight: 600;
+      }
+      &__category {
+        font-weight: 400;
+        color: #757575;
+      }
+      &__price {
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 24px;
+      }
     }
-    &__item.button {
+    &__button {
+      width: 100%;
+      height: $button-height;
+      border: none;
       padding-bottom: 0;
       margin-top: 8px;
       padding: 0 14px;
