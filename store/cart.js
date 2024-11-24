@@ -49,6 +49,8 @@ export const useCartStore = defineStore({
 
       payload === "plus"
         ? (this.orders[curentIndex].quantity += 1)
+        : this.orders[curentIndex].quantity > 1
+        ? (this.orders[curentIndex].quantity -= 1)
         : this.deleteProductById(id);
     },
   },

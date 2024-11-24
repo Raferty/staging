@@ -1,6 +1,6 @@
 <template>
   <div class="orders-list" :class="classes">
-    <div class="orders-list__toggle"></div>
+    <div class="orders-list__toggle" @click="isHide = !isHide"></div>
     <div class="orders-list__header">
       <UiTitle tag="h3" class="orders-list__title">Cart</UiTitle>
       <div class="orders-list__clear" @click="cartStore.resetCart">clear</div>
@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="orders-list__actions">
-          <div>
+          <div class="orders-list__actions-buttons">
             <UiButton
               @click="cartStore.changeQuantity(order.productId, 'minus')"
               >-</UiButton
@@ -52,8 +52,10 @@ const props = defineProps({
 
 const cartStore = useCartStore();
 
+const isHide = ref(props.visible);
+
 const classes = computed(() => ({
-  [`--hide`]: !props.visible,
+  [`--hide`]: !isHide.value,
 }));
 </script>
 
@@ -68,6 +70,12 @@ const classes = computed(() => ({
   height: 100%;
   display: flex;
   flex-direction: column;
+  transform: translateX(0);
+  transition: all 0.4s ease-in;
+
+  &.--hide {
+    transform: translateX(100%);
+  }
 
   &__header {
     display: flex;
@@ -96,7 +104,16 @@ const classes = computed(() => ({
   }
 
   &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
     height: 60px;
+
+    &-buttons {
+      display: flex;
+      gap: 4px;
+    }
   }
 
   &__toggle {
@@ -129,6 +146,7 @@ const classes = computed(() => ({
   }
 
   &__icon {
+    cursor: pointer;
     width: 32px;
     height: 32px;
   }
