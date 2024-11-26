@@ -23,6 +23,7 @@ export const useCartStore = defineStore({
     },
 
     resetCart() {
+      console.log("reset");
       this.orders = [];
     },
 

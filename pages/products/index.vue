@@ -12,6 +12,9 @@
 </template>
 
 <script setup>
+definePageMeta({
+  middleware: ["auth"],
+});
 // Связка двух компонентов
 
 const ProductsData = ref([]);

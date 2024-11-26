@@ -29,6 +29,12 @@ const handleForm = (event) => {
   })
     .then((res) => {
       authStore.updateToken(res.token);
+
+      console.log("res", res);
+
+      if (res.token) {
+        localStorage.setItem("userData", JSON.stringify(event));
+      }
     })
     .finally(() => (open.value = false));
 };

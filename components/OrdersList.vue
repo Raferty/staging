@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="orders-list__actions">
-      <UiButton block size="large">Buy $</UiButton>
+      <UiButton block size="large" @click="saveUserCart">Buy $</UiButton>
     </div>
   </div>
 </template>
@@ -57,6 +57,10 @@ const isHide = ref(props.visible);
 const classes = computed(() => ({
   [`--hide`]: !isHide.value,
 }));
+
+const saveUserCart = () => {
+  localStorage.setItem("userCart", JSON.stringify(cartStore.ordersList));
+};
 </script>
 
 <style lang="scss" scoped>

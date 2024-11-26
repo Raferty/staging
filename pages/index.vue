@@ -2,6 +2,10 @@
   <NuxtLayout> it's mane page </NuxtLayout>
 </template>
 
-<script setup></script>
+<script setup>
+definePageMeta({
+  middleware: ["auth"],
+});
+</script>
 
 <style lang="scss"></style>
