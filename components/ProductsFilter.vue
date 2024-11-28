@@ -40,12 +40,13 @@
         </div>
       </div>
       <div class="products-filter__actions">
-        <button
-          class="products-filter__button button"
+        <UiButton
+          block
+          size="large"
+          class="products-filter__button"
           @click="$emit('updateFilter', filterData)"
+          >Search</UiButton
         >
-          Search
-        </button>
       </div>
     </section>
   </template>
@@ -77,7 +78,11 @@
   <style lang="scss" scoped>
   .products-filter {
     display: flex;
-    margin-bottom: 52px;
+    align-items: flex-end;
+    margin-bottom: 36px;
+    background-color: #eeeded;
+    padding: 16px;
+    border-radius: 4px;
   
     &__categories {
       margin-bottom: 36px;
@@ -89,6 +94,7 @@
   
     &__actions {
       width: 220px;
+      margin-left: 32px;
     }
   }
   
