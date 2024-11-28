@@ -6,20 +6,27 @@
 import { useAuthStore } from "./store/auth";
 
 const authStore = useAuthStore();
-const isValid = ref(false)
+onMounted(() => {
+  if (!!localStorage.user) {
+    let user = JSON.parse(localStorage.user, (key, value) => value);
+    authStore.updateToken(user.token);
+  }
+});
+
+const isValid = ref(false);
 const submitForm = async (formData) => {
   isValid.value = useValidationForm(formData);
 
   if (isValid.value !== true) return alert(isValid.value);
-  await $fetch(
-    `https://fakestoreapi.com/auth/login`,
-    {
-      method: "POST",
-      body: JSON.stringify(formData),
-    }
-  ).then((res) => {
+
+  await $fetch(`https://fakestoreapi.com/auth/login`, {
+    method: "POST",
+    body: JSON.stringify(formData),
+  })
+    .then((res) => {
       authStore.updateToken(res.token);
-    })
+      localStorage.user = JSON.stringify(res);
+    });
 };
 const login = {
   title: "Login",

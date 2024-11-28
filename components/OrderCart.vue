@@ -10,7 +10,7 @@
     <div class="cart__order">
       <div class="cart__order__container" :hidden>
         <div class="cart__order__item-container">
-          <div class="cart__order__item" v-for="order in cart">
+          <div class="cart__order__item" v-for="order in orderStore.getOrders">
             <picture class="cart__order__picture">
               <img :src="order.image" alt="" />
             </picture>
@@ -42,7 +42,10 @@
             </div>
           </div>
         </div>
-        <div class="cart__order__button-container" v-if="cart.length > 0">
+        <div
+          class="cart__order__button-container"
+          v-if="orderStore.getOrders.length > 0"
+        >
           <button class="cart__order__button">
             <span>Buy $ {{ productsSum }}</span>
           </button>
@@ -53,7 +56,7 @@
             <span>Clear All</span>
           </button>
         </div>
-        <UiLabel tag="h3" v-else="!cart.length > 0"
+        <UiLabel tag="h3" v-else="!orderStore.getOrders.length > 0"
           >There's nothing here yet</UiLabel
         >
       </div>
@@ -66,11 +69,10 @@ const hidden = ref("");
 import { useOrderStore } from "./store/cart";
 
 const orderStore = useOrderStore();
-const cart = orderStore.getOrders;
 
 const productsSum = computed(() => {
-  if (!!cart)
-    return cart
+  if (!!orderStore.getOrders)
+    return orderStore.getOrders
       .map((e) => e.price * e.quantity)
       .reduce((a, b) => a + b, 0)
       .toFixed(2);
@@ -92,7 +94,7 @@ $container-width: 460px;
     padding: 0;
     background-color: transparent;
     &.bin {
-    height: calc($button-height/2);
+      height: calc($button-height/2);
     }
     &__icon-container {
       display: flex;
