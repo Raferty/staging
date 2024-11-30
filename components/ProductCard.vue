@@ -58,6 +58,24 @@ const localData = {
   rate: props.rate,
   price: props.price,
 };
+
+onMounted(() => {
+  if (!!localStorage.user) {
+    const userCart = JSON.parse(localStorage.user)?.cart;
+    if (
+      userCart?.some((e) => {
+        return e.productId === props.id;
+      })
+    ) {
+      userCart.map((e) => {
+        if (e.productId === props.id) {
+          orderStore.addProduct(localData);
+          orderStore.changeQuantity(e.productId, e.quantity);
+        }
+      });
+    }
+  }
+});
 </script>
 
 <style lang="scss" scoped>

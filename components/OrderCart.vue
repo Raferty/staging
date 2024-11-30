@@ -46,13 +46,10 @@
           class="cart__order__button-container"
           v-if="orderStore.getOrders.length > 0"
         >
-          <button class="cart__order__button">
+          <button class="cart__order__button" @click="buy()">
             <span>Buy $ {{ productsSum }}</span>
           </button>
-          <button
-            class="cart__order__button"
-            @click="orderStore.deleteAllProducts()"
-          >
+          <button class="cart__order__button" @click="clear()">
             <span>Clear All</span>
           </button>
         </div>
@@ -70,12 +67,36 @@ import { useOrderStore } from "./store/cart";
 
 const orderStore = useOrderStore();
 
+const tmp = computed(() => {
+  return Object.defineProperty(JSON.parse(localStorage.user), "cart", {
+    __proto__: null,
+    value: orderStore.getOrders,
+  });
+});
+
+function buy() {
+  console.log("tmp :>> ", tmp.value);
+  localStorage.user = JSON.stringify(tmp.value, [
+    "token",
+    "cart",
+    "productId",
+    "quantity",
+  ]);
+}
+
+function clear() {
+  orderStore.deleteAllProducts();
+  localStorage.user = JSON.stringify(tmp.value, ["token"]);
+}
+
+
 const productsSum = computed(() => {
-  if (!!orderStore.getOrders)
-    return orderStore.getOrders
+  return (
+    orderStore.getOrders
       .map((e) => e.price * e.quantity)
       .reduce((a, b) => a + b, 0)
-      .toFixed(2);
+      .toFixed(2) || 0
+  );
 });
 </script>
 

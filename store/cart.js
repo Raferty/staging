@@ -51,7 +51,6 @@ export const useOrderStore = defineStore({
     },
 
     changeQuantity(id, qty) {
-      console.log("id :>> ", id, "\nqty :>> ", qty);
       const curentIndex = this.orders.findIndex(
         (order) => order.productId === id
       );
