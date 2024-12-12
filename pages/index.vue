@@ -1,8 +1,4 @@
-<template>
-  <div>
-    <ProductList />
-  </div>
-</template>
+<template>it's mane page</template>
 
 <script setup></script>
 

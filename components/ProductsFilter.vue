@@ -1,5 +1,5 @@
 <template>
-  <section class="products-filter">
+  <div class="products-filter">
     <div class="products-filter__container">
       <UiTitle tag="h3">Categories</UiTitle>
       <div class="products-filter__categories categories">
@@ -40,14 +40,13 @@
       </div>
     </div>
     <div class="products-filter__actions">
-      <button
-        class="products-filter__button button"
+      <UiButton
+        class="products-filter__button"
         @click="$emit('updateFilter', filterData)"
+        >Search</UiButton
       >
-        Search
-      </button>
     </div>
-  </section>
+  </div>
 </template>
 
 <script setup>

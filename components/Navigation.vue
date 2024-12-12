@@ -2,7 +2,7 @@
   <nav class="nav">
     <ul class="nav__list">
       <li v-for="item in routes" :key="item.name" class="nav__item">
-        <NuxtLink
+        <NuxtLink>
           :to="item.link"
           class="nav__link"
           :class="{ 'nav__link--active': item.link === route.path }"
@@ -28,6 +28,10 @@ const routes = ref([
   {
     name: "Articles",
     link: "/articles",
+  },
+  {
+    name: "Admin",
+    link: "/admin",
   },
 ]);
 </script>

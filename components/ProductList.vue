@@ -1,14 +1,12 @@
 <template>
-  <section class="products-info">
-    <div class="products-info__sum">Сумма к оплате - $ {{ productsSum }}</div>
-  </section>
   <section class="products-list">
     <div
       class="products-list__item"
-      v-for="product in ProductsData"
+      v-for="product in products"
       :key="product.id"
     >
       <ProductCard
+        :id="product.id"
         :title="product.title"
         :category="product.category"
         :price="product.price"
@@ -19,15 +17,13 @@
 </template>
 
 <script setup>
-const { data: ProductsData } = await useFetch(
-  `https://fakestoreapi.com/products`
-);
-
-const productsSum = computed(() => {
-  return ProductsData.value
-    .map((i) => i.price)
-    .reduce((a, b) => a + b, 0)
-    .toFixed(2);
+defineProps({
+  products: {
+    type: Array,
+    default: () => {
+      return [];
+    },
+  },
 });
 </script>
 

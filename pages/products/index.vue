@@ -33,3 +33,4 @@ const filterProducts = computed(() => {
 </script>
 
 <style lang="scss" scoped></style>
+
