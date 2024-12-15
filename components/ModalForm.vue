@@ -4,18 +4,22 @@
 
     <div class="modal-form__container">
       <IconClose class="modal-form__close" @click="$emit('close')" />
-      <div class="modal-form__title">Login</div>
+
+      <div class="modal-form__title">
+        <slot name="form-title"> Login </slot>
+      </div>
+
       <form @submit.prevent="handleForm">
-        <div class="modal-form__row">
+        <slot>
           <UiInput label="username" v-model="formData.username" size="large" />
-        </div>
-        <div class="modal-form__row">
           <UiInput label="password" v-model="formData.password" size="large" />
-        </div>
+        </slot>
         <div class="modal-form__row">
-          <UiButton block size="large" @click="$emit('submit', formData)"
-            >Login</UiButton
-          >
+          <slot name="form-actions" :submit="formSubmit">
+            <UiButton block size="large" @click="formSubmit(formData)"
+              >Login</UiButton
+            >
+          </slot>
         </div>
       </form>
     </div>
@@ -23,12 +27,33 @@
 </template>
 
 <script setup>
+import { useAuthStore } from "./store/auth";
 const emit = defineEmits(["close", "submit"]);
+
+const authStore = useAuthStore();
+
+const props = defineProps({
+  url: {
+    type: String,
+    default: "auth/login",
+  },
+});
 
 const formData = reactive({
   username: "mor_2314",
   password: "83r5^_",
 });
+
+const formSubmit = (event) => {
+  $fetch(`https://fakestoreapi.com/${props.url}`, {
+    method: "POST",
+    body: JSON.stringify(event),
+  }).then((res) => {
+    authStore.updateToken(res.token);
+    localStorage.user = JSON.stringify(res);
+    emit("close");
+  });
+};
 </script>
 
 <style lang="scss" scoped>
