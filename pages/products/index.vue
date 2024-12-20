@@ -1,17 +1,32 @@
 <template>
-  <UiTitle tag="h1">Filter</UiTitle>
-  {{ filters }}
-  <ProductsFilter @update-filter="filterHandle" />
-  <UiTitle tag="h1">Products</UiTitle>
-  <ProductsList :products="filterProducts" />
+  <NuxtLayout name="default">
+    <UiTitle tag="h1">Filter</UiTitle>
+    <ProductsFilter @update-filter="filterHandle" />
+    <UiTitle tag="h1">Products</UiTitle>
+    <ProductsList :products="filterProducts" />
+
+    <template #aside>
+      <OrdersList />
+    </template>
+  </NuxtLayout>
 </template>
 
 <script setup>
 // Связка двух компонентов
 
-const { data: ProductsData } = await useFetch(
-  `https://fakestoreapi.com/products`
-);
+const ProductsData = ref([]);
+
+try {
+  const { data, error } = await useFetch(`https://fakestoreapi.com/products`);
+
+  if (data.value) {
+    ProductsData.value = data.value;
+  }
+
+  console.log("error", error);
+} catch (error) {
+  console.log("error", error);
+}
 
 const filters = ref();
 
@@ -33,4 +48,3 @@ const filterProducts = computed(() => {
 </script>
 
 <style lang="scss" scoped></style>
-

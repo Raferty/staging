@@ -6,13 +6,12 @@
 
       <div class="header__actions">
         <UiButton v-if="authStore.isAuth" @click="navigateTo('/admin/')"
-          >Admin panel</UiButton
+          >Amin panel</UiButton
         >
         <UiButton @click="open = !open">Login</UiButton>
       </div>
     </div>
   </header>
-
   <ModalForm v-if="open" @close="open = false" @submit="handleForm" />
 </template>
 
@@ -37,6 +36,7 @@ const handleForm = (event) => {
 
 <style lang="scss" scoped>
 .header {
+  height: 46px;
   padding: 8px 0;
   margin-bottom: 32px;
 

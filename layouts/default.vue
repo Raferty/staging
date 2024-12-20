@@ -1,10 +1,11 @@
 <template>
   <Header />
   <main class="main l-default">
-    <suspense>
-      <slot />
-    </suspense>
+    <slot />
   </main>
+  <aside class="aside">
+    <slot name="aside"></slot>
+  </aside>
   <Footer />
 </template>
 
@@ -14,5 +15,12 @@
 .main {
   flex: 1;
   width: 100%;
+}
+
+.aside {
+  position: fixed;
+  right: 0;
+  top: 96px;
+  bottom: 120px;
 }
 </style>

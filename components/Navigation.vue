@@ -8,6 +8,7 @@
           :class="{ 'nav__link--active': item.link === route.path }"
           >{{ item.name }}
         </NuxtLink>
+        >
       </li>
     </ul>
   </nav>

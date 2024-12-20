@@ -1,5 +1,5 @@
 <template>
-  <div class="products-filter">
+  <section class="products-filter">
     <div class="products-filter__container">
       <UiTitle tag="h3">Categories</UiTitle>
       <div class="products-filter__categories categories">
@@ -41,12 +41,14 @@
     </div>
     <div class="products-filter__actions">
       <UiButton
+        block
+        size="large"
         class="products-filter__button"
         @click="$emit('updateFilter', filterData)"
         >Search</UiButton
       >
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -76,7 +78,11 @@ const filterData = computed(() => ({
 <style lang="scss" scoped>
 .products-filter {
   display: flex;
-  margin-bottom: 52px;
+  align-items: flex-end;
+  margin-bottom: 36px;
+  background-color: #eeeded;
+  padding: 16px;
+  border-radius: 4px;
 
   &__categories {
     margin-bottom: 36px;
@@ -88,6 +94,7 @@ const filterData = computed(() => ({
 
   &__actions {
     width: 220px;
+    margin-left: 32px;
   }
 }
 
