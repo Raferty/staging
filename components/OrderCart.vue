@@ -62,10 +62,10 @@
 </template>
 
 <script setup>
+import { inject } from 'vue'
 const hidden = ref("");
-import { useOrderStore } from "./store/cart";
 
-const orderStore = useOrderStore();
+const orderStore = reactive(inject("useOrderStore"));
 
 const tmp = computed(() => {
   return Object.defineProperty(JSON.parse(localStorage.user), "cart", {

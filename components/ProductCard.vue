@@ -36,10 +36,11 @@
 
 <script setup>
 import { useAuthStore } from "./store/auth";
-import { useOrderStore } from "./store/cart";
+import { inject } from 'vue'
+
+const orderStore = reactive(inject("useOrderStore"));
 
 const authStore = useAuthStore();
-const orderStore = useOrderStore();
 
 const props = defineProps({
   id: [String, Number],
