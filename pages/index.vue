@@ -1,41 +1,5 @@
 <template>
-  <NuxtLayout>
-    <ModalForm url="users">
-      <template #form-title> Регистрация </template>
-
-      <template #form-actions="{ submit }">
-        <UiButton block size="large" @click="submit(formData)">Login</UiButton>
-      </template>
-
-      <UiInput label="username" v-model="formData.username" size="large" />
-      <UiInput label="password" v-model="formData.password" size="large" />
-      <UiInput label="email" v-model="formData.email" size="large" />
-      <UiInput
-        label="firstname"
-        v-model="formData.name.firstname"
-        size="large"
-      />
-      <UiInput label="lastname" v-model="formData.name.lastname" size="large" />
-      <UiInput label="address" v-model="formData.address.city" size="large" />
-      <UiInput label="address" v-model="formData.address.street" size="large" />
-      <UiInput label="address" v-model="formData.address.number" size="large" />
-      <UiInput
-        label="address"
-        v-model="formData.address.zipcode"
-        size="large"
-      />
-      <UiInput
-        label="address"
-        v-model="formData.address.geolocation.lat"
-        size="large"
-      />
-      <UiInput
-        label="address"
-        v-model="formData.address.geolocation.long"
-        size="large"
-      />
-    </ModalForm>
-  </NuxtLayout>
+  <NuxtLayout> index Page </NuxtLayout>
 </template>
 
 <script setup>

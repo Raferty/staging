@@ -4,23 +4,38 @@
       <Logo />
       <NavigationMenu />
 
-      <div class="header__actions">
+      <div id="sasasas" class="header__actions">
         <UiButton v-if="authStore.isAuth" @click="navigateTo('/admin/')"
           >Amin panel</UiButton
         >
-        <UiButton @click="open = !open">Login</UiButton>
+        <UiButton v-else @click="open = !open">Login</UiButton>
       </div>
     </div>
   </header>
-  <ModalForm v-if="open" @close="open = false" @submit="handleForm" />
+  <ModalForm v-if="open" @close="handleClose" @submit="handleForm" />
 </template>
 
 <script setup>
+import { EToast } from "vue3-modern-toast";
 import { useAuthStore } from "./store/auth";
+
+const { $toast } = useNuxtApp();
 
 const authStore = useAuthStore();
 
 const open = ref(false);
+
+const handleClose = () => {
+  open.value = false;
+
+  $toast.show({
+    message: "Авторизация прошла успешно",
+    type: EToast.SUCCESS,
+    duration: 5000,
+    dismissible: true,
+    icon: "✨",
+  });
+};
 
 const handleForm = (event) => {
   $fetch(`https://fakestoreapi.com/auth/login`, {

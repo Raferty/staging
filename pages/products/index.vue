@@ -48,6 +48,19 @@ const filterProducts = computed(() => {
         )
     : ProductsData.value;
 });
+
+import { provide } from "vue";
+
+const message = ref(1000);
+
+function updateMessage() {
+  message.value += 1;
+}
+
+provide("message", {
+  message,
+  updateMessage,
+});
 </script>
 
 <style lang="scss" scoped></style>

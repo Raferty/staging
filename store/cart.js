@@ -6,6 +6,7 @@ export const useCartStore = defineStore({
   state: () => {
     return {
       orders: [],
+      message: "dont buy this!!!!",
     };
   },
 
