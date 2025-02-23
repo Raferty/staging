@@ -43,12 +43,16 @@ import { EToast } from "vue3-modern-toast";
 import { useAuthStore } from "./store/auth";
 import { useCartStore } from "./store/cart";
 
-//YYYY-MM-DDTHH:mm:ss.sssZ
-let resultTime = reactive({});
 const time = ref(new Date(2025, 2, 1, 12, 0, 0));
+const timerInterval = ref(null);
+const resultTime = ref({});
 
-const decrementTime = (date) => {
-  const countDownDate = date.getTime();
+const startInterval = () => {
+  timerInterval.value = setInterval(countDown, 1000);
+};
+
+function countDown() {
+  const countDownDate = time.value.getTime();
   const now = new Date().getTime();
 
   const distance = countDownDate - now;
@@ -67,19 +71,17 @@ const decrementTime = (date) => {
     seconds,
   });
 
-  resultTime = {
+  resultTime.value = {
     days,
     hours,
     minutes,
     seconds,
   };
-};
-
-const startInterval = () => {
-  setInterval(decrementTime(time.value), 1000);
-};
+}
 
 startInterval();
+
+onMounted(() => {});
 
 const authStore = useAuthStore();
 const cartStore = useCartStore();
