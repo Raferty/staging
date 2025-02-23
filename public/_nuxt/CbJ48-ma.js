@@ -1,1 +1,0 @@
-import{a8 as t}from"./CnENCE-U.js";const o=t({id:"auth-store",state:()=>({access_token:null,user:null}),actions:{updateToken(e){this.access_token=e}},getters:{isAuth:e=>!!e.access_token}});export{o as u};

@@ -1,1 +1,0 @@
-import{_ as s,c as n,J as t,o as r,d as l}from"./CnENCE-U.js";const a={};function d(e,o){return r(),n("button",null,[t(e.$slots,"prepend"),t(e.$slots,"default",{},()=>[o[0]||(o[0]=l("Click"))]),t(e.$slots,"append")])}const p=s(a,[["render",d]]);export{p as default};

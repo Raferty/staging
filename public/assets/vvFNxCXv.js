@@ -1,0 +1,1 @@
+import{_ as t,c as n,a as s,J as o,o as a}from"./DCzsqzv6.js";const c={},r={class:"container"},_={class:"content"};function d(e,l){return a(),n("div",r,[s("div",_,[o(e.$slots,"default")]),s("aside",null,[o(e.$slots,"aside")])])}const f=t(c,[["render",d]]);export{f as default};

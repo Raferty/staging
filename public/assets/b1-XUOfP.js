@@ -1,0 +1,1 @@
+import{_ as s,c as o,J as t,o as n}from"./DCzsqzv6.js";const r={class:"item"},a={__name:"ListItem",props:{item:[String,Object]},setup(c){return(e,i)=>(n(),o("li",r,[t(e.$slots,"icon",{},void 0,!0),t(e.$slots,"default",{},void 0,!0),t(e.$slots,"icon2",{},void 0,!0)]))}},_=s(a,[["__scopeId","data-v-b33ae614"]]);export{_ as default};
