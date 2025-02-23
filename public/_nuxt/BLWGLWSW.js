@@ -1,0 +1,1 @@
+import{u as a}from"./CbJ48-ma.js";import{H as s}from"./CnENCE-U.js";const n=s(async()=>{const e=a(),t=localStorage.getItem("userData");t&&Object.keys(t).length>0&&$fetch("https://fakestoreapi.com/auth/login",{method:"POST",body:t}).then(o=>{e.updateToken(o.token)})});export{n as default};

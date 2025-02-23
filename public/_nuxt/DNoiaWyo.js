@@ -1,0 +1,1 @@
+import{_ as o,c as e,o as t}from"./CnENCE-U.js";const c={},_={class:"footer"};function s(n,r){return t(),e("footer",_," it's footer ")}const f=o(c,[["render",s],["__scopeId","data-v-ff0bec76"]]);export{f as default};
