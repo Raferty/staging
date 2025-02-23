@@ -1,0 +1,1 @@
+import{_ as e,m as s,w as o,J as n,O as l,a5 as r,o as c}from"./CnENCE-U.js";const _={__name:"UiTitle",props:{tag:String},setup(t){return(a,i)=>(c(),s(r(t.tag),{class:l(["title",[`title--${t.tag}`]])},{default:o(()=>[n(a.$slots,"default",{},void 0,!0)]),_:3},8,["class"]))}},u=e(_,[["__scopeId","data-v-891381aa"]]);export{u as default};
