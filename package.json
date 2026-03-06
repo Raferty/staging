@@ -12,15 +12,15 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.7.0",
+    "@pinia/nuxt": "^0.11.3",
     "gh-pages": "^6.3.0",
-    "nuxt": "^3.13.0",
-    "pinia": "^2.2.6",
-    "vue": "latest",
-    "vue-router": "latest",
+    "nuxt": "^4.3.1",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.29",
+    "vue-router": "^5.0.3",
     "vue3-modern-toast": "^1.0.32"
   },
   "devDependencies": {
-    "sass": "^1.79.4"
+    "sass": "^1.97.3"
   }
 }
